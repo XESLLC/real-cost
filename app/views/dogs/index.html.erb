@@ -1,0 +1,35 @@
+<h1>This is the Real Cost Page of a Dog</h1>
+
+<p>
+  Insert the details for the Dog you may be purchasing.
+  This app will then provide the additial cost you will need to budget for owning the dog.
+
+  You can come back to this page and make as many examples as you like, and compare up to three of them together.
+
+</p>
+<div>
+  <%= "___________________________ " %>
+</div>
+<%= form_for @dog do |f| %>
+<%= f.label :name %>
+<%= f.text_field :name %>
+<div>
+  <%= "___________________________ " %>
+</div>
+<%= f.label :breed_id, "Breed" %>
+<%= f.collection_select(:breed_id, Breed.all, :id, :breed) %>
+<div>
+  <%= "___________________________"  %>
+</div>
+<%= f.label :age %>
+<%= f.number_field :age %>
+<div>
+  <%= "___________________________"  %>
+</div>
+<%= f.label :weight %>
+<%= f.number_field :weight %>
+<div>
+  <%= "___________________________"  %>
+</div>
+<%= f.submit %>
+<% end %>

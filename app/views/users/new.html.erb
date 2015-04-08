@@ -1,0 +1,17 @@
+<h1>New User</h1>
+
+<p>
+  Please enter your first and last name. Then you will be directed to the homepage, where you start developing costs.
+</p>
+
+<%= form_for @user do |f| %>
+<p>
+  <%= f.label :first_name %>
+  <%= f.text_field :first_name %>
+</p>
+<p>
+  <%= f.label :last_name %>
+  <%= f.text_field :last_name %>
+</p>
+  <%= f.submit %>
+  <% end %>

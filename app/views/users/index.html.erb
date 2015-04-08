@@ -1,0 +1,15 @@
+<h1>Users Page</h1>
+
+<p>
+  <%= link_to "Create New User", new_user_path %>
+</p>
+
+<p>
+  If you are already signed up, click your name below.
+
+  <% @users.each do |user| %>
+  <p>
+    <%= link_to "#{user.full_name}", root_path(user_id: user.id) %>
+  </p>
+  <% end %>
+</p>
