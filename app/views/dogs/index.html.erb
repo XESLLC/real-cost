@@ -1,35 +1,59 @@
-<h1>This is the Real Cost Page of a Dog</h1>
+<div class="container">
+  <h1>This is the Real Cost Page of a Dog</h1>
 
-<p>
-  Insert the details for the Dog you may be purchasing.
-  This app will then provide the additial cost you will need to budget for owning the dog.
+  <p>
+    Insert the details for the Dog you may be purchasing or pick from your prevoius selections. When finished, click "Get Costs"
+    This app will then provide the additial cost you will need to budget for owning the dog.
 
-  You can come back to this page and make as many examples as you like, and compare up to three of them together.
+    You can come back to this page and make as many examples as you like, and compare up to three of them together.
+  </p>
 
-</p>
-<div>
-  <%= "___________________________ " %>
+  <p>
+    You can also just go back to your prevoius picked items here: <%= link_to "Graph & Picked Items", models_path %>
+  </p>
+
+  <div>
+    <%= "______________________________________________________ " %>
+  </div>
+    <%= form_for @dog do |f| %>
+    <div class="control-label">
+      <%= f.label :name %>
+    </div>
+    <div class="col-md-4">
+      <%= f.text_field :name, class: "form-control" %>
+    </div>
+    <br>
+    <br>
+    <div class="control-label">
+      <%= f.label :breed_id, "Breed" %>
+    </div>
+    <div class="col-md-4">
+      <%= f.collection_select(:breed_id, Breed.all, :id, :breed, {}, class: "form-control" ) %>
+    </div>
+  <br>
+  <br>
+    <div class="control-label">
+      <%= f.label :age %>
+    </div>
+    <div class="col-md-4">
+      <%= f.number_field :age, class: "form-control" %>
+    </div>
+  <br>
+  <br>
+    <div class="control-label">
+      <%= f.label :weight %>
+    </div>
+    <div class="col-md-4">
+      <%= f.number_field :weight, class: "form-control" %>
+    </div>
+  <br>
+  <br
+  <div class="">
+    <br>
+    <%= f.submit :class=> "btn btn-primary" %>
+  </div>
+  <% end %>
 </div>
-<%= form_for @dog do |f| %>
-<%= f.label :name %>
-<%= f.text_field :name %>
-<div>
-  <%= "___________________________ " %>
+
+<div id = "graph" value = <%= [].to_json %> >
 </div>
-<%= f.label :breed_id, "Breed" %>
-<%= f.collection_select(:breed_id, Breed.all, :id, :breed) %>
-<div>
-  <%= "___________________________"  %>
-</div>
-<%= f.label :age %>
-<%= f.number_field :age %>
-<div>
-  <%= "___________________________"  %>
-</div>
-<%= f.label :weight %>
-<%= f.number_field :weight %>
-<div>
-  <%= "___________________________"  %>
-</div>
-<%= f.submit %>
-<% end %>

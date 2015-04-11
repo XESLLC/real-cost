@@ -15,13 +15,23 @@
 //= require turbolinks
 //= require_tree .
 
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script>
+$(document).ready(function() {
+var graphdataObj = JSON.parse($("#graph").attr("value"));
 
-var n = 4, // number of layers
-    m = 58, // number of samples per layer
+var result = [[],[],[]]
+
+  $.map(graphdataObj, function (val, i) {
+    result[0].push({x: i, y: val["training_month"], y0: 0})
+    result[1].push({x: i, y: val["size_cost"], y0: 0})
+    result[2].push({x: i, y: val["health_month"], y0: 0})
+  })
+
+var n = 3, // number of layers
+    m = graphdataObj.length, // number of samples per layer
     stack = d3.layout.stack(),
-    layers = stack(d3.range(n).map(function() { return bumpLayer(m, .1); })),
+
+layers = stack(result)
+
     yGroupMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y; }); }),
     yStackMax = d3.max(layers, function(layer) { return d3.max(layer, function(d) { return d.y0 + d.y; }); });
 
@@ -31,11 +41,11 @@ var margin = {top: 40, right: 10, bottom: 20, left: 10},
 
 var x = d3.scale.ordinal()
     .domain(d3.range(m))
-    .rangeRoundBands([0, width], .08);
+    .rangeRoundBands([0, width], .3);
 
 var y = d3.scale.linear()
     .domain([0, yStackMax])
-    .range([height, 0]);
+    .range([height, 20]);
 
 var color = d3.scale.linear()
     .domain([0, n - 1])
@@ -47,7 +57,7 @@ var xAxis = d3.svg.axis()
     .tickPadding(6)
     .orient("bottom");
 
-var svg = d3.select("body").append("svg")
+var svg = d3.select("#graph").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
   .append("g")
@@ -62,7 +72,7 @@ var layer = svg.selectAll(".layer")
 var rect = layer.selectAll("rect")
     .data(function(d) { return d; })
   .enter().append("rect")
-    .attr("x", function(d) { return x(d.x); })
+    .attr("x", function(d) { return 0; })
     .attr("y", height)
     .attr("width", x.rangeBand())
     .attr("height", 0);
@@ -114,24 +124,5 @@ function transitionStacked() {
       .attr("x", function(d) { return x(d.x); })
       .attr("width", x.rangeBand());
 }
-
-// Inspired by Lee Byron's test data generator.
-function bumpLayer(n, o) {
-
-  function bump(a) {
-    var x = 1 / (.1 + Math.random()),
-        y = 2 * Math.random() - .5,
-        z = 10 / (.1 + Math.random());
-    for (var i = 0; i < n; i++) {
-      var w = (i / n - y) * z;
-      a[i] += x * Math.exp(-w * w);
-    }
-  }
-
-  var a = [], i;
-  for (i = 0; i < n; ++i) a[i] = o + o * Math.random();
-  for (i = 0; i < 5; ++i) bump(a);
-  return a.map(function(d, i) { return {x: i, y: Math.max(0, d)}; });
-}
-
-</script>
+  
+})

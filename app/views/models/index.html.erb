@@ -1,4 +1,36 @@
-<form>
-  <label><input type="radio" name="mode" value="grouped"> Grouped</label>
-  <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
-</form>
+<div class="container">
+  <h1>Cost Graph</h1>
+
+  <p>
+    The graph below will compare the cost of the items your pick here:
+  </p>
+  <div class = "form-group">
+    <%= form_tag do %>
+    <div class="col-md-4">
+      <%= collection_select(:picked_items, :id, @items, :id, :name, {:include_blank => "Pick Item"}, class: "form-control") %>
+    </div>
+    <div class="col-md-6">
+        <%= submit_tag "Graph Items", :class=> "btn btn-primary" %>
+        <%= link_to "Clear", models_path(session_new: true), class: "btn btn-default" %>
+    </div>
+    <% end %>
+  </div>
+
+  <div class = "col-md-12">
+  <span style = "text-align: center"><h5>Selected Items</h5></span>
+    <div class="text-center">
+      <% count = 1 %>
+          <% session[:array].each do |item|%>
+            <%= "------------#{count}. #{item["name"]} Total Cost/Month #{item["cost_month"]}------------" %>
+            <% count += 1 %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+  <form id = "form_graph">
+    <label><input type="radio" name="mode" value="grouped"> Grouped</label>
+    <label><input type="radio" name="mode" value="stacked" checked> Stacked</label>
+  </form>
+
+<div id = "graph" value = <%= session[:array].to_json %> > </div>

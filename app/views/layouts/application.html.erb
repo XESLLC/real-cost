@@ -2,13 +2,22 @@
 <html>
 <head>
   <title>RealCost</title>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
   <%= csrf_meta_tags %>
+
 </head>
 <body>
-  <%= flash[:notice] %>
-<%= yield %>
+    <% if current_user %>
+  <div>
+    <%= "Current User is #{current_user.first_name} #{current_user.last_name}" %>
+  </div>
+  <% end %>
+  <div style = "font: 28px sans-serif; color: red">
+    <%= flash[:notice] %>
+  </div>
+    <%= yield %>
 
 </body>
 </html>

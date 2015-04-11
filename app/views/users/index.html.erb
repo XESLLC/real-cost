@@ -1,5 +1,5 @@
+<div class="container">
 <h1>Users Page</h1>
-
 <p>
   <%= link_to "Create New User", new_user_path %>
 </p>
@@ -8,8 +8,11 @@
   If you are already signed up, click your name below.
 
   <% @users.each do |user| %>
-  <p>
-    <%= link_to "#{user.full_name}", root_path(user_id: user.id) %>
-  </p>
+    <p>
+      <%= link_to "#{user.full_name}", root_path(user_id: user.id), notice: "You're are signed in." %>
+    </p>
   <% end %>
 </p>
+</div>
+<div id = "graph" value = <%= [].to_json %> >
+</div>

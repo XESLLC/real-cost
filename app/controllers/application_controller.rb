@@ -23,13 +23,12 @@ class ApplicationController < ActionController::Base
   end
 
   def check_user
-    if session[:id]
-      current_user = User.find(session[:id])
-    elsif params[:user_id]
+    if params[:user_id]
       session[:id] = params[:user_id]
+      session[:new] = true
       current_user = User.find(params[:user_id])
+    elsif session[:id]
+      current_user = User.find(session[:id])
     end
   end
-
-
 end
